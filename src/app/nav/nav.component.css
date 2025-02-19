@@ -1,50 +1,54 @@
 /* Navbar container */
 .navbar {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background-color: #333; /* Dark background */
-    padding: 15px 30px;
-    color: white;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #333; /* Dark background */
+  padding: 15px 30px;
+  color: white;
 }
 
 /* Site name styling */
 .site-name h2 {
-    margin: 0;
-    font-size: 24px;
-    font-weight: bold;
+  margin: 0;
+  font-size: 24px;
+  font-weight: bold;
 }
 
 /* Menu container */
 .site-menu {
-    display: flex;
-    gap: 20px;
+  display: flex;
+  gap: 20px;
 }
 
 /* Navigation links */
 .site-menu a {
-    text-decoration: none;
-    color: white;
-    font-size: 18px;
-    font-weight: 500;
-    transition: color 0.3s ease-in-out;
+  text-decoration: none;
+  color: white;
+  font-size: 18px;
+  font-weight: 500;
+  transition: color 0.3s ease-in-out;
 }
 
 /* Hover effect for links */
 .site-menu a:hover {
-    color: #ffcc00; /* Highlight color */
+  color: #ffcc00; /* Highlight color */
+}
+
+.active {
+  color: #ffcc00 !important;
 }
 
 /* Responsive design */
 @media (max-width: 768px) {
-    .navbar {
-        flex-direction: column;
-        text-align: center;
-    }
+  .navbar {
+    flex-direction: column;
+    text-align: center;
+  }
 
-    .site-menu {
-        flex-direction: column;
-        gap: 10px;
-        margin-top: 10px;
-    }
+  .site-menu {
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 10px;
+  }
 }

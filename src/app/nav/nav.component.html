@@ -3,10 +3,10 @@
     <h2>{{ sitename }}</h2>
   </div>
   <div class="site-menu">
-    <a href="Home">HOME</a>
+    <a routerLink="Home" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">HOME</a>
     <!-- <a href="#">ABOUT</a> -->
-    <a href="Contact">CONTACT</a>
+    <a routerLink="Contact" routerLinkActive="active">CONTACT</a>
     <!-- <a href="#">CART</a> -->
-    <a href="Product">PRODUCTS</a>
+    <a routerLink="Product" routerLinkActive="active">PRODUCTS</a>
   </div>
 </div>
