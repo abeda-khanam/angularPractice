@@ -2,47 +2,57 @@
   <p>Number is: {{ item }}</p>
 </div> -->
 <div>
-  <app-search></app-search>
+  <app-search (searchTextChanged)="onSearchTextEntered($event)"></app-search>
   <app-filter
     [all]="getTotalProducts()"
     [inStock]="getInStockProducts()"
     [outOfStock]="getOutOfStockProducts()"
+    (filterRadioButtonSelectionChanged)="onFilterRadioButtonChanged($event)"
   ></app-filter>
 </div>
-<div *ngFor="let p of products">
-  <div class="product-container">
-    <div class="image-container">
-      <img
-        [src]="p.image"
-        alt="img"
-        style="max-height: 50px; max-width: 50px"
-      />
-    </div>
-    <div>
-      <div class="name-container">
-        <h6>{{ p.name }}e</h6>
+<ng-container *ngFor="let p of products">
+  <!-- productCountRadioButton === 'All' ||
+      productCountRadioButton === p.availability -->
+  <div *ngIf="searchText === '' || p.name.toLowerCase().includes(searchText)">
+    <div class="product-container">
+      <div class="image-container">
+        <img
+          [src]="p.image"
+          alt="img"
+          style="max-height: 50px; max-width: 50px"
+        />
       </div>
-      <div class="detailContainer">
-        <div
-          class="details"
-          [ngStyle]="{ color: p.availability === 'In Stock' ? 'Green' : 'Red' }"
-        >
-          {{ p.availability }}
+      <div>
+        <div class="name-container">
+          <h6>{{ p.name }}e</h6>
         </div>
-        <div class="details">{{ p.price }}</div>
-        <div class="details">{{ p.color }}</div>
+        <div class="detailContainer">
+          <div
+            class="details"
+            [ngStyle]="{
+              color: p.availability === 'In Stock' ? 'Green' : 'Red'
+            }"
+          >
+            {{ p.availability }}
+          </div>
+          <div class="details">{{ p.price }}</div>
+          <div class="details">{{ p.color }}</div>
+        </div>
       </div>
-    </div>
-    <div class="options">
-      <button class="btn1">Show Details</button>
-      <button class="btn2" *ngIf="p.availability === 'In Stock'; else notifyme">
-        Buy Now
-      </button>
-      <ng-template #notifyme>
-        <button [ngStyle]="{ backgroundColor: 'Red' }" class="btn2">
-          Notify Me
+      <div class="options">
+        <button class="btn1">Show Details</button>
+        <button
+          class="btn2"
+          *ngIf="p.availability === 'In Stock'; else notifyme"
+        >
+          Buy Now
         </button>
-      </ng-template>
+        <ng-template #notifyme>
+          <button [ngStyle]="{ backgroundColor: 'Red' }" class="btn2">
+            Notify Me
+          </button>
+        </ng-template>
+      </div>
     </div>
   </div>
-</div>
+</ng-container>

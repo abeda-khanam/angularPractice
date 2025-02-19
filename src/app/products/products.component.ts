@@ -66,9 +66,24 @@ export class ProductsComponent {
     return this.products.length;
   }
   getInStockProducts() {
-    return this.products.filter((product) => product.availability === 'In Stock').length;
+    return this.products.filter(
+      (product) => product.availability === 'In Stock'
+    ).length;
   }
   getOutOfStockProducts() {
-    return this.products.filter((product) => product.availability === 'Out of Stock').length;
+    return this.products.filter(
+      (product) => product.availability === 'Out of Stock'
+    ).length;
+  }
+  productCountRadioButton: string = 'All';
+  searchText: string = '';
+  onFilterRadioButtonChanged(data: string) {
+    this.productCountRadioButton = data;
+    // console.log(this.productCountRadioButton);
+  }
+
+  onSearchTextEntered(searchValue: string) {
+    this.searchText = searchValue;
+    console.log(this.searchText);
   }
 }

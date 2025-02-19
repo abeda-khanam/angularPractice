@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
 @Component({
@@ -9,9 +9,18 @@ import { FormsModule } from '@angular/forms';
   templateUrl: './search.component.html',
   styleUrl: './search.component.css',
 })
-export class SearchComponent {
+export class SearchComponent implements OnInit {
+  constructor() {}
+  ngOnInit(): void {}
   searchValue: string = '';
-  changeSearchValue(eventData: Event) {
-    this.searchValue = (<HTMLInputElement>eventData.target).value;
+
+  @Output()
+  searchTextChanged: EventEmitter<string> = new EventEmitter<string>();
+
+  onSearchTextChanged() {
+    this.searchTextChanged.emit(this.searchValue);
   }
+  // changeSearchValue(eventData: Event) {
+  //   this.searchValue = (<HTMLInputElement>eventData.target).value;
+  // }
 }
