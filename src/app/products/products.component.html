@@ -13,7 +13,13 @@
 <ng-container *ngFor="let p of products">
   <!-- productCountRadioButton === 'All' ||
       productCountRadioButton === p.availability -->
-  <div *ngIf="searchText === '' || p.name.toLowerCase().includes(searchText)">
+  <div
+    *ngIf="
+      (productCountRadioButton === 'All' ||
+        productCountRadioButton === p.availability) &&
+      (searchText === '' || p.name.toLowerCase().includes(searchText))
+    "
+  >
     <div class="product-container">
       <div class="image-container">
         <img
