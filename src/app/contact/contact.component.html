@@ -1,1 +1,102 @@
-<p>contact works!</p>
+<div class="form-container">
+  <h2>Contact</h2>
+  <form [formGroup]="reactiveForm" (ngSubmit)="onSubmit()">
+    
+    <!-- First Name -->
+    <div class="form-group">
+      <label for="firstName">First Name</label>
+      <input
+        type="text"
+        id="firstName"
+        formControlName="firstname"
+        placeholder="Enter your first name"
+        required
+        [ngClass]="{'invalid': reactiveForm.get('firstname')?.touched && reactiveForm.get('firstname')?.invalid}"
+      />
+      <small class="error" *ngIf="reactiveForm.get('firstname')?.touched && reactiveForm.get('firstname')?.invalid">
+        First name is required (min 2 chars).
+      </small>
+    </div>
+
+    <!-- Last Name -->
+    <div class="form-group">
+      <label for="lastName">Last Name</label>
+      <input
+        type="text"
+        id="lastName"
+        formControlName="lastname"
+        placeholder="Enter your last name"
+        required
+        [ngClass]="{'invalid': reactiveForm.get('lastname')?.touched && reactiveForm.get('lastname')?.invalid}"
+      />
+      <small class="error" *ngIf="reactiveForm.get('lastname')?.touched && reactiveForm.get('lastname')?.invalid">
+        Last name is required (min 2 chars).
+      </small>
+    </div>
+
+    <!-- Gender Dropdown -->
+    <div class="form-group">
+      <label for="gender">Gender</label>
+      <select 
+        id="gender" 
+        formControlName="gender" 
+        required
+        [ngClass]="{'invalid': reactiveForm.get('gender')?.touched && reactiveForm.get('gender')?.invalid}"
+      >
+        <option value="" disabled selected>Select gender</option>
+        <option value="male">Male</option>
+        <option value="female">Female</option>
+      </select>
+      <small class="error" *ngIf="reactiveForm.get('gender')?.touched && reactiveForm.get('gender')?.invalid">
+        Please select a gender.
+      </small>
+    </div>
+
+    <!-- Email -->
+    <div class="form-group">
+      <label for="email">Email</label>
+      <input
+        type="email"
+        id="email"
+        formControlName="email"
+        placeholder="Enter your email"
+        required
+        [ngClass]="{'invalid': reactiveForm.get('email')?.touched && reactiveForm.get('email')?.invalid}"
+      />
+      <small class="error" *ngIf="reactiveForm.get('email')?.touched && reactiveForm.get('email')?.invalid">
+        Please enter a valid email.
+      </small>
+    </div>
+
+    <!-- Phone Number -->
+    <div class="form-group">
+      <label for="phone">Phone Number</label>
+      <input
+        type="tel"
+        id="phone"
+        formControlName="phonenumber"
+        placeholder="Enter your phone number"
+        required
+        [ngClass]="{'invalid': reactiveForm.get('phonenumber')?.touched && reactiveForm.get('phonenumber')?.invalid}"
+      />
+      <small class="error" *ngIf="reactiveForm.get('phonenumber')?.touched && reactiveForm.get('phonenumber')?.invalid">
+        Enter a valid 10-digit phone number.
+      </small>
+    </div>
+
+    <!-- Submit Button -->
+    <div class="form-group">
+      <button type="submit" [disabled]="reactiveForm.invalid">Submit</button>
+    </div>
+  </form>
+
+  <!-- Display Live Input Values -->
+  <div class="live-preview">
+    <h3>Live Preview:</h3>
+    <p><strong>First Name:</strong> {{ reactiveForm.get("firstname")?.value }}</p>
+    <p><strong>Last Name:</strong> {{ reactiveForm.get("lastname")?.value }}</p>
+    <p><strong>Gender:</strong> {{ reactiveForm.get("gender")?.value }}</p>
+    <p><strong>Email:</strong> {{ reactiveForm.get("email")?.value }}</p>
+    <p><strong>Phone Number:</strong> {{ reactiveForm.get("phonenumber")?.value }}</p>
+  </div>
+</div>
