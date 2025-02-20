@@ -6,6 +6,7 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
+import { EmailValidator } from '../email-validator';
 
 @Component({
   selector: 'app-contact',
@@ -27,7 +28,7 @@ export class ContactComponent implements OnInit {
         Validators.minLength(2),
       ]),
       gender: new FormControl(null, Validators.required),
-      email: new FormControl('', [Validators.required, Validators.email]),
+      email: new FormControl('', [Validators.required, EmailValidator.validate]),
       phonenumber: new FormControl('', [
         Validators.required,
         Validators.pattern(/^[0-9]{10}$/),
