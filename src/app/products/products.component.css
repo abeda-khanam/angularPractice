@@ -95,6 +95,12 @@
   background-color: #1e7e34;
 }
 
+/* Disabled button styling */
+.disabled-btn {
+  background: grey !important;
+  cursor: not-allowed;
+}
+
 /* Responsive design */
 @media (max-width: 768px) {
   .product-container {

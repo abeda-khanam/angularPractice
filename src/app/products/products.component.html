@@ -49,15 +49,18 @@
         <button class="btn1">Show Details</button>
         <button
           class="btn2"
-          *ngIf="p.availability === 'In Stock'; else notifyme"
+          (click)="addToCart(p)"
+          [disabled]="p.availability === 'Out of Stock' || p.quantity === 0"
+          [ngClass]="{'disabled-btn': p.availability === 'Out of Stock' || p.quantity === 0}"
         >
-          Buy Now
+          <!-- *ngIf="p.availability === 'In Stock'; else notifyme" -->
+          Add to Cart
         </button>
-        <ng-template #notifyme>
+        <!-- <ng-template #notifyme>
           <button [ngStyle]="{ backgroundColor: 'Red' }" class="btn2">
             Notify Me
           </button>
-        </ng-template>
+        </ng-template> -->
       </div>
     </div>
   </div>
