@@ -95,6 +95,13 @@
   background-color: #1e7e34;
 }
 
+/* Button when added to cart */
+.added-btn {
+  background: red !important; /* Ash color */
+  cursor: pointer;
+}
+
+
 /* Disabled button styling */
 .disabled-btn {
   background: grey !important;

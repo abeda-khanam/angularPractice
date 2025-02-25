@@ -1,9 +1,11 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { SearchComponent } from '../search/search.component';
 import { FilterComponent } from '../filter/filter.component';
 import { PRODUCTS } from '../data/products';
 import { CartService } from '../services/cart.service';
+import { AuthService } from '../services/auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-products',
@@ -12,13 +14,41 @@ import { CartService } from '../services/cart.service';
   templateUrl: './products.component.html',
   styleUrl: './products.component.css',
 })
-export class ProductsComponent {
+export class ProductsComponent implements OnInit {
   products = PRODUCTS;
+  addedProducts: Set<number> = new Set();
 
-  constructor(private cartService: CartService) {}
+  constructor(
+    private cartService: CartService,
+    private authService: AuthService,
+    private router: Router
+  ) {}
+
+  ngOnInit(): void {
+    this.loadAddedProducts();
+  }
+
+  private loadAddedProducts() {
+    const cartItems = this.cartService.getCart();
+    cartItems.forEach((item) => {
+      this.addedProducts.add(item.id);
+    });
+  }
 
   addToCart(product: any) {
-    this.cartService.addToCart(product);
+    if (!this.authService.isLoggedIn()) {
+      sessionStorage.setItem('pendingProduct', JSON.stringify(product));
+      sessionStorage.setItem('lastPage', this.router.url);
+      this.router.navigate(['/Login']);
+    } else {
+      if (this.addedProducts.has(product.id)) {
+        this.cartService.removeFromCart(product.id); // 🔹 Remove if already added
+        this.addedProducts.delete(product.id);
+      } else {
+        this.cartService.addToCart(product); // 🔹 Add if not already added
+        this.addedProducts.add(product.id);
+      }
+    }
   }
 
   getTotalProducts() {

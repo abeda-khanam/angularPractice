@@ -27,4 +27,8 @@
       </tbody>
     </table>
     <h3>Total Price: ${{ getTotalPrice() }}</h3>
+    <div>
+      <button class="checkout-btn" (click)="goToCheckout()">Checkout</button>
+      <router-outlet></router-outlet>
+    </div>
   </div>

@@ -1,6 +1,3 @@
-<!-- <div *ngFor="let item of [1, 3, 5]">
-  <p>Number is: {{ item }}</p>
-</div> -->
 <div>
   <app-search (searchTextChanged)="onSearchTextEntered($event)"></app-search>
   <app-filter
@@ -51,10 +48,14 @@
           class="btn2"
           (click)="addToCart(p)"
           [disabled]="p.availability === 'Out of Stock' || p.quantity === 0"
-          [ngClass]="{'disabled-btn': p.availability === 'Out of Stock' || p.quantity === 0}"
+          [ngClass]="{
+            'added-btn': addedProducts.has(p.id),
+            'disabled-btn':
+              p.availability === 'Out of Stock' || p.quantity === 0
+          }"
         >
           <!-- *ngIf="p.availability === 'In Stock'; else notifyme" -->
-          Add to Cart
+          {{ addedProducts.has(p.id) ? "Remove from Cart" : "Add to Cart" }}
         </button>
         <!-- <ng-template #notifyme>
           <button [ngStyle]="{ backgroundColor: 'Red' }" class="btn2">

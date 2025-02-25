@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
-import { PRODUCTS } from '../data/products';
+import { AuthService } from './auth.service';
 
 @Injectable({
   providedIn: 'root',
@@ -9,8 +9,30 @@ export class CartService {
   private cartItems: any[] = [];
   private cartCount = new BehaviorSubject<number>(0); //will add to navbar later
   cartCount$ = this.cartCount.asObservable(); //for navbar
+  private currentUser: string | null = null;
 
-  constructor() {}
+  constructor(private authService: AuthService) {
+    this.loadCart();
+  }
+
+  loadCart() {
+    const user = this.authService.getCurrentUser();
+    if (user) {
+      this.currentUser = user.username;
+      const storedCart = localStorage.getItem(`cart_${this.currentUser}`);
+      this.cartItems = storedCart ? JSON.parse(storedCart) : [];
+      this.updateCartCount();
+    }
+  }
+
+  private saveCart() {
+    if (this.currentUser) {
+      localStorage.setItem(
+        `cart_${this.currentUser}`,
+        JSON.stringify(this.cartItems)
+      );
+    }
+  }
 
   getCart() {
     return this.cartItems;
@@ -25,11 +47,13 @@ export class CartService {
     } else {
       this.cartItems.push({ ...product, quantity: 1 });
     }
+    this.saveCart();
     this.updateCartCount();
   }
 
   removeFromCart(productId: number) {
     this.cartItems = this.cartItems.filter((item) => item.id !== productId);
+    this.saveCart();
     this.updateCartCount();
   }
 
@@ -38,6 +62,7 @@ export class CartService {
     if (product) {
       product.quantity = quantity > 0 ? quantity : 1;
     }
+    this.saveCart();
     this.updateCartCount();
   }
 
@@ -48,9 +73,19 @@ export class CartService {
     );
   }
 
-  updateCartCount() { //for navbar
+  updateCartCount() {
+    //for navbar
     this.cartCount.next(
       this.cartItems.reduce((sum, item) => sum + item.quantity, 0)
     );
   }
+
+  //clear cart on checkout??
+  // clearCart() {
+  //   this.cartItems = [];
+  //   if (this.currentUser) {
+  //     localStorage.removeItem(`cart_${this.currentUser}`);
+  //   }
+  //   this.updateCartCount();
+  // }
 }

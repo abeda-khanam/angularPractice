@@ -22,7 +22,17 @@ export class AuthService {
     }
   }
 
-  register(name: string, username: string, password: string, role: string): boolean {
+  getCurrentUser() {
+    const sessionUser = sessionStorage.getItem('sessionUser');
+    return sessionUser ? JSON.parse(sessionUser) : null;
+  }
+
+  register(
+    name: string,
+    username: string,
+    password: string,
+    role: string
+  ): boolean {
     let users = JSON.parse(localStorage.getItem('users') || '[]');
 
     // Check if the username already exists
@@ -39,10 +49,15 @@ export class AuthService {
   login(username: string, password: string): boolean {
     let users = JSON.parse(localStorage.getItem('users') || '[]');
 
-    const user = users.find((user: any) => user.username === username && user.password === password);
+    const user = users.find(
+      (user: any) => user.username === username && user.password === password
+    );
 
     if (user) {
-      sessionStorage.setItem('sessionUser', JSON.stringify({ username, role: user.role })); // ✅ Store session data
+      sessionStorage.setItem(
+        'sessionUser',
+        JSON.stringify({ username, role: user.role })
+      ); // ✅ Store session data
       this.isAuthenticated.next(true);
       this.userRole.next(user.role);
       return true; // Login successful

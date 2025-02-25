@@ -10,13 +10,26 @@ import { CustomerDashboardComponent } from './customer-dashboard/customer-dashbo
 import { AuthGuard } from './gaurds/auth.guard';
 import { AdminDashboardComponent } from './admin-dashboard/admin-dashboard.component';
 import { RoleGuard } from './gaurds/role.guard';
+import { CheckoutComponent } from './checkout/checkout.component';
 
 export const routes: Routes = [
   { path: '', redirectTo: 'Home', pathMatch: 'full' },
   { path: 'Home', component: ContainerComponent },
   { path: 'Contact', component: ContactComponent },
   { path: 'Product', component: ProductsComponent },
-  { path: 'Cart', component: CartComponent, canActivate: [AuthGuard] },
+  {
+    path: 'Cart',
+    component: CartComponent,
+    canActivate: [AuthGuard],
+    children: [
+      {
+        path: 'Checkout',
+        component: CheckoutComponent,
+        canActivate: [AuthGuard],
+      },
+    ],
+  },
+
   //loginreg
   { path: 'Login', component: LoginComponent },
   { path: 'Register', component: RegisterComponent },
