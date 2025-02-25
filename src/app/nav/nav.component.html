@@ -1,7 +1,7 @@
 <div class="navbar">
-  <div class="site-name">
-    <h2>{{ sitename }}</h2>
-  </div>
+  <!-- <div class="site-name">
+    <h2 routerLink="Home">{{ sitename }}</h2>
+  </div> -->
   <div class="site-menu">
     <a
       routerLink="Home"
@@ -9,9 +9,20 @@
       [routerLinkActiveOptions]="{ exact: true }"
       >HOME</a
     >
-    <!-- <a href="#">ABOUT</a> -->
     <!-- <a routerLink="Contact" routerLinkActive="active">CONTACT</a> -->
-    <a routerLink="Cart" routerLinkActive="active">CART</a>
+    <a routerLink="Cart" routerLinkActive="active" *ngIf="isAuthenticated$"
+      >CART ({{ cartCount$ | async }})</a
+    >
     <a routerLink="Product" routerLinkActive="active">PRODUCTS</a>
+  </div>
+  <div class="site-auth">
+    <a routerLink="Login" routerLinkActive="active" *ngIf="!isAuthenticated$"
+      >LOGIN</a
+    >
+    <a routerLink="Register" routerLinkActive="active" *ngIf="!isAuthenticated$"
+      >REGISTER</a
+    >
+    <a (click)="logout()" *ngIf="isAuthenticated$">LOGOUT</a>
+    <!-- <button *ngIf="isAuthenticated$" (click)="logout()">LOGOUT</button> -->
   </div>
 </div>

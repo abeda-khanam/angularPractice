@@ -16,22 +16,26 @@
 }
 
 /* Menu container */
-.site-menu {
+.site-menu,
+.site-auth {
   display: flex;
   gap: 20px;
 }
 
 /* Navigation links */
-.site-menu a {
+.site-menu a,
+.site-auth a {
   text-decoration: none;
   color: white;
   font-size: 18px;
   font-weight: 500;
   transition: color 0.3s ease-in-out;
+  cursor: pointer;
 }
 
 /* Hover effect for links */
-.site-menu a:hover {
+.site-menu a:hover,
+.site-auth a:hover {
   color: #ffcc00; /* Highlight color */
 }
 
@@ -46,7 +50,8 @@
     text-align: center;
   }
 
-  .site-menu {
+  .site-menu,
+  .site-auth {
     flex-direction: column;
     gap: 10px;
     margin-top: 10px;

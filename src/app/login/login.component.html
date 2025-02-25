@@ -1,0 +1,10 @@
+<div class="form-container">
+    <h2>Login</h2>
+    <input type="text" [(ngModel)]="username" placeholder="Username" />
+    <input type="password" [(ngModel)]="password" placeholder="Password" />
+    <select [(ngModel)]="role">
+      <option value="customer">Customer</option>
+      <option value="admin">Admin</option>
+    </select>
+    <button (click)="login()">Login</button>
+  </div>

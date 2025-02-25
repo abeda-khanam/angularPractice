@@ -3,7 +3,7 @@ import { Component } from '@angular/core';
 import { SearchComponent } from '../search/search.component';
 import { FilterComponent } from '../filter/filter.component';
 import { PRODUCTS } from '../data/products';
-import { CartService } from '../Services/cart.service';
+import { CartService } from '../services/cart.service';
 
 @Component({
   selector: 'app-products',
