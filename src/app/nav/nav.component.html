@@ -19,9 +19,8 @@
       *ngIf="isAuthenticated$ && isAdmin"
       >ADMIN PANEL</a
     >
-    <a routerLink="Product" routerLinkActive="active" *ngIf="!isAdmin || !isAuthenticated$"
-      >PRODUCTS</a
-    >
+    <a routerLink="Product" routerLinkActive="active">PRODUCTS</a>
+    <!-- *ngIf="!isAdmin || !isAuthenticated$" -->
   </div>
   <div class="site-auth">
     <a routerLink="Login" routerLinkActive="active" *ngIf="!isAuthenticated$"

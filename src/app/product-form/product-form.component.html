@@ -1,0 +1,32 @@
+<div class="modal">
+    <div class="modal-content">
+      <h2>{{ product ? 'Edit Product' : 'Add Product' }}</h2>
+  
+      <form [formGroup]="productForm" (ngSubmit)="submitForm()">
+        <!-- Product Name -->
+        <label for="name">Product Name</label>
+        <input type="text" id="name" formControlName="name" placeholder="Enter product name" required />
+  
+        <!-- Price -->
+        <label for="price">Price ($)</label>
+        <input type="number" id="price" formControlName="price" placeholder="Enter price" required />
+  
+        <!-- Color -->
+        <label for="color">Color</label>
+        <input type="text" id="color" formControlName="color" placeholder="Enter color" required />
+  
+        <!-- Quantity -->
+        <label for="quantity">Quantity</label>
+        <input type="number" id="quantity" formControlName="quantity" min="0" required />
+  
+        <!-- Submit & Cancel Buttons -->
+        <div class="modal-buttons">
+          <button type="submit" class="submit-btn">{{ product ? 'Update' : 'Add' }} Product</button>
+          <button type="button" class="close-btn" (click)="closeModal.emit()">Cancel</button>
+        </div>
+      </form>
+    </div>
+  </div>
+  
+  <!-- ✅ Modal Background Overlay -->
+  <div class="modal-overlay" (click)="closeModal.emit()"></div>

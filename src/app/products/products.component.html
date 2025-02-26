@@ -1,4 +1,10 @@
 <div>
+  <button *ngIf="isAdmin" class="add-btn" (click)="openModal()">
+    Add Product
+  </button>
+</div>
+
+<div>
   <app-search (searchTextChanged)="onSearchTextEntered($event)"></app-search>
   <app-filter
     [all]="getTotalProducts()"
@@ -38,16 +44,27 @@
           >
             {{ p.availability }}
           </div>
-          <div class="details">{{ p.price }}</div>
-          <div class="details">{{ p.color }}</div>
+          <div
+            class="details"
+            [ngStyle]="{
+              color: p.availability === 'In Stock' ? 'Green' : 'Red'
+            }"
+          >
+            Quantity: {{ p.quantity }}
+          </div>
+          <div class="details">Price: {{ p.price }}</div>
+          <div class="details">Color: {{ p.color }}</div>
         </div>
       </div>
-      <div class="options">
+      <div *ngIf="isAdmin" class="options admin-buttons">
+        <button class="edit-btn" (click)="editProduct(p)">Edit</button>
+        <button class="delete-btn" (click)="deleteProduct(p.id)">Delete</button>
+      </div>
+      <div class="options" *ngIf="!isAdmin">
         <button class="btn1" [routerLink]="['/Product', p.id]">
           Show Details
         </button>
         <button
-          *ngIf="!(isAdmin$ | async)"
           class="btn2"
           (click)="addToCart(p)"
           [disabled]="p.availability === 'Out of Stock' || p.quantity === 0"
@@ -63,3 +80,12 @@
     </div>
   </div>
 </ng-container>
+
+<div class="modal-overlay" *ngIf="showModal">
+  <div class="modal-content">
+    <app-product-form
+      [product]="selectedProduct"
+      (closeModal)="closeModal()"
+    ></app-product-form>
+  </div>
+</div>

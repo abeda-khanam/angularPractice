@@ -7,27 +7,37 @@ import { CartService } from '../services/cart.service';
 import { AuthService } from '../services/auth.service';
 import { Router, RouterModule } from '@angular/router';
 import { Observable } from 'rxjs';
+import { ProductService } from '../services/product.service';
+import { ProductFormComponent } from '../product-form/product-form.component';
 
 @Component({
   selector: 'app-products',
   standalone: true,
-  imports: [CommonModule, SearchComponent, FilterComponent, RouterModule],
+  imports: [CommonModule, SearchComponent, FilterComponent, RouterModule, ProductFormComponent],
   templateUrl: './products.component.html',
   styleUrl: './products.component.css',
 })
 export class ProductsComponent implements OnInit {
-  products = PRODUCTS;
+  products: any[] = [];
   addedProducts: Set<number> = new Set();
-  isAdmin$!: Observable<boolean>;
+  // isAdmin$!: Observable<boolean>;
+  isAdmin = false;
+  selectedProduct: any = null;
+  showModal = false;
 
   constructor(
     private cartService: CartService,
     private authService: AuthService,
+    private productService: ProductService,
     private router: Router
-  ) {}
+  ) {
+    this.isAdmin = this.authService.getRole() === 'admin';
+    this.productService.products$.subscribe(
+      (products) => (this.products = products)
+    );
+  }
 
   ngOnInit(): void {
-    this.isAdmin$ = this.authService.isAdmin$;
     this.loadAddedProducts();
   }
 
@@ -77,5 +87,27 @@ export class ProductsComponent implements OnInit {
   onSearchTextEntered(searchValue: string) {
     this.searchText = searchValue;
     console.log(this.searchText);
+  }
+
+  /** ✅ Open Add Product Modal */
+  openModal() {
+    this.selectedProduct = null;
+    this.showModal = true;
+  }
+
+  /** ✅ Open Edit Product Modal */
+  editProduct(product: any) {
+    this.selectedProduct = { ...product };
+    this.showModal = true;
+  }
+
+  /** ✅ Delete Product */
+  deleteProduct(productId: number) {
+    this.productService.deleteProduct(productId);
+  }
+
+  /** ✅ Close Modal */
+  closeModal() {
+    this.showModal = false;
   }
 }
