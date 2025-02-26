@@ -16,7 +16,7 @@ export class NavComponent implements OnInit {
   sitename: string = 'eShopping'; // string interpolation
   isAuthenticated$!: boolean;
   cartCount$: Observable<number>;
-  // cartCount$ = this.cartService.cartCount$;
+  isAdmin: boolean = false;
 
   constructor(
     private authService: AuthService,
@@ -28,6 +28,9 @@ export class NavComponent implements OnInit {
   ngOnInit(): void {
     this.authService.isAuthenticated$.subscribe((authStatus) => {
       this.isAuthenticated$ = authStatus;
+    });
+    this.authService.isAdmin$.subscribe((adminStatus) => {
+      this.isAdmin = adminStatus; // 🔹 Store boolean value
     });
   }
 

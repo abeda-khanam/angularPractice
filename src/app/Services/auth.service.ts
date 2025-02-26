@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { Router } from '@angular/router';
 import { BehaviorSubject } from 'rxjs';
 
 @Injectable({
@@ -7,18 +8,19 @@ import { BehaviorSubject } from 'rxjs';
 export class AuthService {
   private isAuthenticated = new BehaviorSubject<boolean>(false);
   private userRole = new BehaviorSubject<string | null>(null); //admin, user
+  private isAdminSubject = new BehaviorSubject<boolean>(false);
 
   isAuthenticated$ = this.isAuthenticated.asObservable();
   userRole$ = this.userRole.asObservable();
+  isAdmin$ = this.isAdminSubject.asObservable();
 
-  constructor() {
-    // Load auth status from localStorage
-    // const storedUser = localStorage.getItem('user');
+  constructor(private router: Router) {
     const sessionUser = sessionStorage.getItem('sessionUser');
     if (sessionUser) {
       const userData = JSON.parse(sessionUser);
       this.isAuthenticated.next(true);
       this.userRole.next(userData.role);
+      this.isAdminSubject.next(userData.role === 'admin');
     }
   }
 
@@ -50,16 +52,20 @@ export class AuthService {
     let users = JSON.parse(localStorage.getItem('users') || '[]');
 
     const user = users.find(
-      (user: any) => user.username === username && user.password === password && user.role === role
+      (user: any) =>
+        user.username === username &&
+        user.password === password &&
+        user.role === role
     );
 
     if (user) {
       sessionStorage.setItem(
         'sessionUser',
         JSON.stringify({ username, role: user.role })
-      ); // ✅ Store session data
+      );
       this.isAuthenticated.next(true);
       this.userRole.next(user.role);
+      this.isAdminSubject.next(user.role === 'admin');
       return true; // Login successful
     }
     return false; // Login failed
@@ -69,6 +75,8 @@ export class AuthService {
     sessionStorage.removeItem('sessionUser'); // ✅ Clear session data
     this.isAuthenticated.next(false);
     this.userRole.next(null);
+    this.isAdminSubject.next(false);
+    this.router.navigate(['/Home']);
   }
 
   getRole() {
@@ -77,5 +85,9 @@ export class AuthService {
 
   isLoggedIn() {
     return this.isAuthenticated.getValue();
+  }
+
+  isAdmin() {
+    return this.isAdminSubject.getValue();
   }
 }

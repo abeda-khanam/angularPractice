@@ -6,6 +6,7 @@ import { PRODUCTS } from '../data/products';
 import { CartService } from '../services/cart.service';
 import { AuthService } from '../services/auth.service';
 import { Router, RouterModule } from '@angular/router';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-products',
@@ -17,6 +18,7 @@ import { Router, RouterModule } from '@angular/router';
 export class ProductsComponent implements OnInit {
   products = PRODUCTS;
   addedProducts: Set<number> = new Set();
+  isAdmin$!: Observable<boolean>;
 
   constructor(
     private cartService: CartService,
@@ -25,6 +27,7 @@ export class ProductsComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    this.isAdmin$ = this.authService.isAdmin$;
     this.loadAddedProducts();
   }
 

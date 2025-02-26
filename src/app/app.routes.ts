@@ -6,7 +6,6 @@ import { ProductsComponent } from './products/products.component';
 import { CartComponent } from './cart/cart.component';
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
-import { CustomerDashboardComponent } from './customer-dashboard/customer-dashboard.component';
 import { AuthGuard } from './gaurds/auth.guard';
 import { AdminDashboardComponent } from './admin-dashboard/admin-dashboard.component';
 import { RoleGuard } from './gaurds/role.guard';
@@ -38,17 +37,13 @@ export const routes: Routes = [
   //loginreg
   { path: 'Login', component: LoginComponent },
   { path: 'Register', component: RegisterComponent },
-  //customer
-  {
-    path: 'Dashboard',
-    component: CustomerDashboardComponent,
-    canActivate: [AuthGuard],
-  },
+
   {
     path: 'Admin',
     component: AdminDashboardComponent,
     canActivate: [AuthGuard, RoleGuard],
     data: { role: 'admin' },
+    children: [{ path: 'Product', component: ProductsComponent }],
   },
 
   { path: '**', component: ErrorComponent }, //should be last route always

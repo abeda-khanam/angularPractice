@@ -47,6 +47,7 @@
           Show Details
         </button>
         <button
+          *ngIf="!(isAdmin$ | async)"
           class="btn2"
           (click)="addToCart(p)"
           [disabled]="p.availability === 'Out of Stock' || p.quantity === 0"
@@ -56,14 +57,8 @@
               p.availability === 'Out of Stock' || p.quantity === 0
           }"
         >
-          <!-- *ngIf="p.availability === 'In Stock'; else notifyme" -->
           {{ addedProducts.has(p.id) ? "Remove from Cart" : "Add to Cart" }}
         </button>
-        <!-- <ng-template #notifyme>
-          <button [ngStyle]="{ backgroundColor: 'Red' }" class="btn2">
-            Notify Me
-          </button>
-        </ng-template> -->
       </div>
     </div>
   </div>
