@@ -46,11 +46,11 @@ export class AuthService {
     return true;
   }
 
-  login(username: string, password: string): boolean {
+  login(username: string, password: string, role: string): boolean {
     let users = JSON.parse(localStorage.getItem('users') || '[]');
 
     const user = users.find(
-      (user: any) => user.username === username && user.password === password
+      (user: any) => user.username === username && user.password === password && user.role === role
     );
 
     if (user) {

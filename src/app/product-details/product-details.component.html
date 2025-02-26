@@ -1,0 +1,17 @@
+<div class="product-details-container" *ngIf="product">
+  <h2>{{ product.name }}</h2>
+  <img [src]="product.image" alt="{{ product.name }}" width="200" />
+  <p><strong>Price:</strong> ${{ product.price }}</p>
+  <p><strong>Color:</strong> {{ product.color }}</p>
+  <p>
+    <strong>Availability:</strong>
+    <span
+      [ngStyle]="{
+        color: product.availability === 'In Stock' ? 'green' : 'red'
+      }"
+      >{{ product.availability }}</span
+    >
+  </p>
+
+  <button class="back-btn" (click)="goBack()">Back to Products</button>
+</div>

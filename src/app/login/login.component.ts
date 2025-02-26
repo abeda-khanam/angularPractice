@@ -24,7 +24,7 @@ export class LoginComponent {
   ) {}
 
   login() {
-    if (this.authService.login(this.username, this.password)) {
+    if (this.authService.login(this.username, this.password, this.role)) {
       const pendingProduct = sessionStorage.getItem('pendingProduct');
       const lastPage = sessionStorage.getItem('lastPage') || '/Home';
       if (pendingProduct) {
@@ -37,7 +37,7 @@ export class LoginComponent {
       this.cartService.loadCart();
       this.router.navigate([lastPage]);
     } else {
-      this.errorMessage = 'Invalid Credentials';
+      this.errorMessage = 'Invalid Credentials or Incorrect Role';
     }
   }
 }

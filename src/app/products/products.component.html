@@ -43,7 +43,9 @@
         </div>
       </div>
       <div class="options">
-        <button class="btn1">Show Details</button>
+        <button class="btn1" [routerLink]="['/Product', p.id]">
+          Show Details
+        </button>
         <button
           class="btn2"
           (click)="addToCart(p)"

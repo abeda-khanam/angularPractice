@@ -11,12 +11,17 @@ import { AuthGuard } from './gaurds/auth.guard';
 import { AdminDashboardComponent } from './admin-dashboard/admin-dashboard.component';
 import { RoleGuard } from './gaurds/role.guard';
 import { CheckoutComponent } from './checkout/checkout.component';
+import { ProductDetailsComponent } from './product-details/product-details.component';
 
 export const routes: Routes = [
   { path: '', redirectTo: 'Home', pathMatch: 'full' },
   { path: 'Home', component: ContainerComponent },
   { path: 'Contact', component: ContactComponent },
-  { path: 'Product', component: ProductsComponent },
+  {
+    path: 'Product',
+    component: ProductsComponent,
+  },
+  { path: 'Product/:id', component: ProductDetailsComponent },
   {
     path: 'Cart',
     component: CartComponent,

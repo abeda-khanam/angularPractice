@@ -5,12 +5,12 @@ import { FilterComponent } from '../filter/filter.component';
 import { PRODUCTS } from '../data/products';
 import { CartService } from '../services/cart.service';
 import { AuthService } from '../services/auth.service';
-import { Router } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-products',
   standalone: true,
-  imports: [CommonModule, SearchComponent, FilterComponent],
+  imports: [CommonModule, SearchComponent, FilterComponent, RouterModule],
   templateUrl: './products.component.html',
   styleUrl: './products.component.css',
 })
