@@ -1,1 +1,43 @@
-<p>checkout works!</p>
+<div class="checkout-container">
+    <h2>Checkout</h2>
+    <form [formGroup]="checkoutForm" (ngSubmit)="placeOrder()">
+      <div class="form-group">
+        <label for="name">Full Name</label>
+        <input id="name" type="text" formControlName="name" placeholder="Enter your full name" required>
+        <small *ngIf="checkoutForm.get('name')?.invalid && checkoutForm.get('name')?.touched">
+          Name is required.
+        </small>
+      </div>
+  
+      <div class="form-group">
+        <label for="address">Address</label>
+        <input id="address" type="text" formControlName="address" placeholder="Enter your address" required>
+        <small *ngIf="checkoutForm.get('address')?.invalid && checkoutForm.get('address')?.touched">
+          Address is required.
+        </small>
+      </div>
+  
+      <div class="form-group">
+        <label for="city">City</label>
+        <input id="city" type="text" formControlName="city" placeholder="Enter your city" required>
+      </div>
+  
+      <div class="form-group">
+        <label for="country">Country</label>
+        <input id="country" type="text" formControlName="country" placeholder="Enter your country" required>
+      </div>
+  
+      <div class="form-group">
+        <label for="phone">Phone Number</label>
+        <input id="phone" type="tel" formControlName="phone" placeholder="Enter your phone number" required>
+        <small *ngIf="checkoutForm.get('phone')?.invalid && checkoutForm.get('phone')?.touched">
+          Valid phone number is required.
+        </small>
+      </div>
+  
+      <button type="submit" class="place-order-btn" [disabled]="checkoutForm.invalid">Place Order</button>
+    </form>
+  
+    <!-- 🔹 Back to Cart Button -->
+    <button class="back-to-cart-btn" (click)="goBackToCart()">Back to Cart</button>
+  </div>

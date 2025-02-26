@@ -81,11 +81,11 @@ export class CartService {
   }
 
   //clear cart on checkout??
-  // clearCart() {
-  //   this.cartItems = [];
-  //   if (this.currentUser) {
-  //     localStorage.removeItem(`cart_${this.currentUser}`);
-  //   }
-  //   this.updateCartCount();
-  // }
+  clearCart() {
+    this.cartItems = [];
+    if (this.currentUser) {
+      localStorage.removeItem(`cart_${this.currentUser}`);
+    }
+    this.updateCartCount();
+  }
 }
