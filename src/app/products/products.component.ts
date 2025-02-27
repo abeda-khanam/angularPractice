@@ -2,11 +2,9 @@ import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { SearchComponent } from '../search/search.component';
 import { FilterComponent } from '../filter/filter.component';
-import { PRODUCTS } from '../data/products';
 import { CartService } from '../services/cart.service';
 import { AuthService } from '../services/auth.service';
 import { Router, RouterModule } from '@angular/router';
-import { Observable } from 'rxjs';
 import { ProductService } from '../services/product.service';
 import { ProductFormComponent } from '../product-form/product-form.component';
 
@@ -20,7 +18,6 @@ import { ProductFormComponent } from '../product-form/product-form.component';
 export class ProductsComponent implements OnInit {
   products: any[] = [];
   addedProducts: Set<number> = new Set();
-  // isAdmin$!: Observable<boolean>;
   isAdmin = false;
   selectedProduct: any = null;
   showModal = false;

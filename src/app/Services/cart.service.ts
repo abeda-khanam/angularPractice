@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { AuthService } from './auth.service';
+import { ProductService } from './product.service';
 
 @Injectable({
   providedIn: 'root',
@@ -11,7 +12,10 @@ export class CartService {
   cartCount$ = this.cartCount.asObservable(); //for navbar
   private currentUser: string | null = null;
 
-  constructor(private authService: AuthService) {
+  constructor(
+    private authService: AuthService,
+    private productService: ProductService
+  ) {
     this.loadCart();
   }
 
@@ -60,7 +64,7 @@ export class CartService {
   updateQuantity(productId: number, quantity: number) {
     const product = this.cartItems.find((item) => item.id === productId);
     if (product) {
-      product.quantity = quantity > 0 ? quantity : 1;
+      product.quantity = Math.max(Number(quantity), 1);
     }
     this.saveCart();
     this.updateCartCount();
@@ -75,13 +79,19 @@ export class CartService {
 
   updateCartCount() {
     //for navbar
-    this.cartCount.next(
-      this.cartItems.reduce((sum, item) => sum + item.quantity, 0)
+    const totalItems = this.cartItems.reduce(
+      (sum, item) => sum + Number(item.quantity),
+      0
     );
+    this.cartCount.next(Number(totalItems)); // ✅ Ensure it's a number
   }
 
   //clear cart on checkout??
   clearCart() {
+    this.cartItems.forEach((cartItem) => {
+      this.productService.reduceQuantity(cartItem.id, cartItem.quantity);
+    });
+
     this.cartItems = [];
     if (this.currentUser) {
       localStorage.removeItem(`cart_${this.currentUser}`);

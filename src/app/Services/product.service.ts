@@ -59,4 +59,13 @@ export class ProductService {
     localStorage.setItem('products', JSON.stringify(this.products));
     this.productsSubject.next(this.products);
   }
+
+  reduceQuantity(productId: number, quantity: number) {
+    const product = this.products.find((p) => p.id === productId);
+    if (product && product.quantity >= quantity) {
+      product.quantity -= quantity;
+      product.availability = product.quantity > 0 ? 'In Stock' : 'Out of Stock';
+      this.saveProducts();
+    }
+  }
 }
